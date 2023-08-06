@@ -1,0 +1,58 @@
+[gd_scene load_steps=11 format=3 uid="uid://dq36pjglr8l61"]
+
+[ext_resource type="PackedScene" uid="uid://brl15i67yr718" path="res://Object/Enemy/EnemyBase.tscn" id="1_yfp68"]
+[ext_resource type="Texture2D" uid="uid://ets68ismkabu" path="res://Assets/Sprites/Enemy/BatWizard/batWizard1.png" id="2_s5tew"]
+[ext_resource type="Script" path="res://Scripts/Enemy/WizardEnume.gd" id="2_uica4"]
+[ext_resource type="Texture2D" uid="uid://baacrmuhg7etc" path="res://Assets/Sprites/Enemy/BatWizard/batWizard2.png" id="3_if022"]
+[ext_resource type="Texture2D" uid="uid://dl12ul88gfwd7" path="res://Assets/Sprites/Enemy/BatWizard/batWizard3.png" id="4_t2q1t"]
+[ext_resource type="Texture2D" uid="uid://gkeij38pdqtg" path="res://Assets/Sprites/Enemy/BatWizard/batWizard4.png" id="5_ioq60"]
+[ext_resource type="Texture2D" uid="uid://blsn3tc132gnl" path="res://Assets/Sprites/Enemy/BatWizard/batWizard5.png" id="6_hx3aj"]
+[ext_resource type="Texture2D" uid="uid://c6pjjrrupkk1f" path="res://Assets/Sprites/Enemy/BatWizard/batWizard6.png" id="7_30wy0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gc11v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_s5tew")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_if022")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_t2q1t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ioq60")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_hx3aj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_30wy0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gpckb"]
+radius = 2.0
+
+[node name="BatWizzard" instance=ExtResource("1_yfp68")]
+script = ExtResource("2_uica4")
+hp = 60
+soulCost = 40
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." index="0"]
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_gc11v")
+autoplay = "default"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ataka" index="0"]
+shape = SubResource("SphereShape3D_gpckb")
+
+[node name="AttackCalldown" parent="." index="5"]
+wait_time = 8.0
+
+[node name="BulletPos" type="Marker3D" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)

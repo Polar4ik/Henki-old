@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyahpjxwphvj1"]
+
+[sub_resource type="GDScript" id="GDScript_k3qj1"]
+script/source = "extends StaticBody3D
+
+@onready var rng := RandomNumberGenerator.new()
+var flipH := false
+var baseSprite := [\"res://Assets/Sprites/Object/Wood/Base/base1.png\", \"res://Assets/Sprites/Object/Wood/Base/base2.png\", \"res://Assets/Sprites/Object/Wood/Base/base3.png\", \"res://Assets/Sprites/Object/Wood/Base/base4.png\", \"res://Assets/Sprites/Object/Wood/Base/base5.png\", \"res://Assets/Sprites/Object/Wood/Base/base6.png\"]
+var basePointSprite: int
+var runeSprite := [\"res://Assets/Sprites/Object/Wood/Runes/Rune1.png\", \"res://Assets/Sprites/Object/Wood/Runes/Rune2.png\", \"res://Assets/Sprites/Object/Wood/Runes/Rune3.png\", \"res://Assets/Sprites/Object/Wood/Runes/Rune4.png\", \"res://Assets/Sprites/Object/Wood/Runes/Rune5.png\", \"res://Assets/Sprites/Object/Wood/Runes/Rune6.png\", \"res://Assets/Sprites/Object/Wood/Runes/Rune7.png\", \"res://Assets/Sprites/Object/Wood/Runes/Rune8.png\"]
+var runePointSprite: int
+
+func _ready() -> void:
+	randomize()
+	basePointSprite = rng.randi_range(0,5)
+	runePointSprite = rng.randi_range(0,7)
+#	print(baseSprite[basePointSprite])
+#	print(runeSprite[runePointSprite])
+	
+	$Base.texture = load(baseSprite[basePointSprite])
+	$Rune.texture = load(runeSprite[runePointSprite])
+	
+	flipH = bool(rng.randi_range(0,1))
+	$Base.flip_h = flipH
+	$Rune.flip_h = flipH
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s26g1"]
+size = Vector3(0.98, 1.97, 0.2)
+
+[node name="Wood" type="StaticBody3D"]
+collision_layer = 2
+collision_mask = 2
+script = SubResource("GDScript_k3qj1")
+
+[node name="Base" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96, 0)
+texture_filter = 0
+
+[node name="Rune" type="Sprite3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.52, -0.005)
+sorting_offset = 1.0
+axis = 0
+texture_filter = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03, 0.99, 0)
+shape = SubResource("BoxShape3D_s26g1")

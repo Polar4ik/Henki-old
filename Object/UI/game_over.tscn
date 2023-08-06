@@ -1,0 +1,85 @@
+[gd_scene load_steps=5 format=3 uid="uid://bv6np08b51b7s"]
+
+[ext_resource type="Script" path="res://Scripts/UI/game_over.gd" id="1_4c6uw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8o5cl"]
+bg_color = Color(0.0980392, 0.0980392, 0.0980392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bwa48"]
+bg_color = Color(0.0392157, 0.0392157, 0.0392157, 1)
+
+[sub_resource type="Theme" id="Theme_rxhcx"]
+Button/styles/normal = SubResource("StyleBoxFlat_8o5cl")
+Button/styles/pressed = SubResource("StyleBoxFlat_bwa48")
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4c6uw")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0823529, 0.0823529, 0.0823529, 0.329412)
+
+[node name="Restart" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -205.0
+offset_top = -91.0
+offset_right = 205.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_rxhcx")
+theme_override_font_sizes/font_size = 50
+text = "Restart
+"
+
+[node name="Menu" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -205.0
+offset_top = 37.0
+offset_right = 205.0
+offset_bottom = 111.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_rxhcx")
+theme_override_font_sizes/font_size = 50
+text = "Menu"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -136.0
+offset_top = -359.0
+offset_right = 136.0
+offset_bottom = -287.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "Game Over"
+
+[connection signal="pressed" from="Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Menu" to="." method="_on_menu_pressed"]

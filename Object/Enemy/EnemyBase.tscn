@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://brl15i67yr718"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy/StandartEnume.gd" id="1_rqtp7"]
+[ext_resource type="AudioStream" uid="uid://bqgdhn2fbd5wr" path="res://Assets/Sound/Enemy/Die.ogg" id="2_57bir"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_esen1"]
+size = Vector3(1.44938, 1.0847, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5l6ov"]
+radius = 2.0
+
+[node name="EnemyBase" type="CharacterBody3D" groups=["Enemy"]]
+top_level = true
+collision_layer = 8
+collision_mask = 11
+script = ExtResource("1_rqtp7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_esen1")
+
+[node name="Uron" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Uron"]
+shape = SubResource("SphereShape3D_5l6ov")
+
+[node name="Ataka" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="StanCalldown" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="AttackCalldown" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="Die" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_57bir")
+
+[connection signal="body_entered" from="Uron" to="." method="_on_uron_body_entered"]
+[connection signal="body_exited" from="Uron" to="." method="_on_uron_body_exited"]
+[connection signal="body_entered" from="Ataka" to="." method="_on_ataka_body_entered"]
+[connection signal="body_exited" from="Ataka" to="." method="_on_ataka_body_exited"]
+[connection signal="timeout" from="StanCalldown" to="." method="_on_stan_coll_down_timeout"]
+[connection signal="timeout" from="AttackCalldown" to="." method="_on_attack_calldown_timeout"]

@@ -1,0 +1,99 @@
+[gd_scene load_steps=15 format=3 uid="uid://8r1s76gnv6q5"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_7el3g"]
+[ext_resource type="Texture2D" uid="uid://d1uxcgxxq0ag" path="res://Assets/Sprites/Player/Back/Idle/1.png" id="2_4nr82"]
+[ext_resource type="Texture2D" uid="uid://cvpplnomw7nib" path="res://Assets/Sprites/Player/Back/Idle/2.png" id="3_iagau"]
+[ext_resource type="Texture2D" uid="uid://deo41h4mky0s8" path="res://Assets/Sprites/Player/Forward/Idle/1.png" id="4_vtgmt"]
+[ext_resource type="Texture2D" uid="uid://c00aplko1auwq" path="res://Assets/Sprites/Player/Forward/Idle/2.png" id="5_wy527"]
+[ext_resource type="PackedScene" uid="uid://0eydyr80nf14" path="res://Object/Weapon/Axe.tscn" id="6_2yohg"]
+[ext_resource type="Texture2D" uid="uid://bdkvwmntvmldl" path="res://Assets/Sprites/Player/Back/Walk/1.png" id="6_jq6td"]
+[ext_resource type="Texture2D" uid="uid://csa3s6i3mx38h" path="res://Assets/Sprites/Player/Back/Walk/2.png" id="7_vraua"]
+[ext_resource type="Texture2D" uid="uid://opgl3wjs8o4m" path="res://Assets/Sprites/Player/Back/Walk/3.png" id="8_x2udl"]
+[ext_resource type="Texture2D" uid="uid://dc7mouh8vrivq" path="res://Assets/Sprites/Player/Forward/Walk/1.png" id="9_66eh0"]
+[ext_resource type="Texture2D" uid="uid://dc38ydnpuieyd" path="res://Assets/Sprites/Player/Forward/Walk/2.png" id="10_1jr8t"]
+[ext_resource type="Texture2D" uid="uid://jnmplhm1grwy" path="res://Assets/Sprites/Player/Forward/Walk/3.png" id="11_v8rux"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_11ho8"]
+size = Vector3(0.742384, 0.781072, 0.231016)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_07e20"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4nr82")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_iagau")
+}],
+"loop": true,
+"name": &"IdleBack",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_vtgmt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_wy527")
+}],
+"loop": true,
+"name": &"IdleForward",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_jq6td")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_vraua")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_x2udl")
+}],
+"loop": true,
+"name": &"WalkBack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_66eh0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_1jr8t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_v8rux")
+}],
+"loop": true,
+"name": &"WalkForward",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody3D" groups=["Player"]]
+collision_layer = 4
+collision_mask = 15
+script = ExtResource("1_7el3g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0397332, 0)
+shape = SubResource("BoxShape3D_11ho8")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_07e20")
+animation = &"WalkForward"
+autoplay = "IdleForward"
+frame_progress = 0.958697
+
+[node name="Weapon" type="Node3D" parent="."]
+
+[node name="Axe" parent="Weapon" instance=ExtResource("6_2yohg")]
+transform = Transform3D(0.970905, 0.239465, 0, -0.239465, 0.970905, 0, 0, 0, 1, 0.447245, 0.1, -0.00161263)
+
+[node name="MagicCalldown" type="Timer" parent="."]
+wait_time = 8.0
+
+[node name="MagicPosition" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+
+[connection signal="timeout" from="MagicCalldown" to="." method="_on_magic_calldown_timeout"]

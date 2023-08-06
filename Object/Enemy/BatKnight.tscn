@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://cpky8rwigf0rf"]
+
+[ext_resource type="PackedScene" uid="uid://brl15i67yr718" path="res://Object/Enemy/EnemyBase.tscn" id="1_332y5"]
+[ext_resource type="Texture2D" uid="uid://dpw7b5rs0jkvo" path="res://Assets/Sprites/Enemy/Bat/1.png" id="2_moaal"]
+[ext_resource type="Texture2D" uid="uid://holi8lbyix25" path="res://Assets/Sprites/Enemy/Bat/2.png" id="3_rg4ym"]
+[ext_resource type="Texture2D" uid="uid://dtcdfluw12udq" path="res://Assets/Sprites/Enemy/Bat/3.png" id="4_u3x7r"]
+[ext_resource type="Texture2D" uid="uid://c1p2feinclytu" path="res://Assets/Sprites/Enemy/Bat/4.png" id="5_rxfo4"]
+[ext_resource type="Texture2D" uid="uid://dqhohp6m1it66" path="res://Assets/Sprites/Enemy/Bat/5.png" id="6_86qb5"]
+[ext_resource type="Texture2D" uid="uid://cikam7iolromx" path="res://Assets/Sprites/Enemy/Bat/6.png" id="7_idenn"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fth2f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_moaal")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rg4ym")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_u3x7r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_rxfo4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_86qb5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_idenn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_yo3a1"]
+radius = 2.0
+
+[node name="BatKnight" instance=ExtResource("1_332y5")]
+hp = 80
+damage = 40
+soulCost = 25
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." index="0"]
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_fth2f")
+autoplay = "default"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ataka" index="0"]
+shape = SubResource("SphereShape3D_yo3a1")
+
+[node name="AttackCalldown" parent="." index="5"]
+wait_time = 2.0

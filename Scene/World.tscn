@@ -1,0 +1,158 @@
+[gd_scene load_steps=18 format=3 uid="uid://b4m7jfas15cam"]
+
+[ext_resource type="Script" path="res://Core/World.gd" id="1_nia64"]
+[ext_resource type="PackedScene" uid="uid://8r1s76gnv6q5" path="res://Object/Player.tscn" id="2_0dhdr"]
+[ext_resource type="PackedScene" uid="uid://1go4v6ic3ybv" path="res://Object/Env/BigTree.tscn" id="2_7axpa"]
+[ext_resource type="Script" path="res://Scripts/Camera.gd" id="3_f1qku"]
+[ext_resource type="PackedScene" uid="uid://djmxdptog6aot" path="res://Scene/Environment.tscn" id="5_gom0g"]
+[ext_resource type="Script" path="res://Scripts/Spawner.gd" id="6_squsn"]
+[ext_resource type="PackedScene" uid="uid://cyf2pjiwgxu2k" path="res://Object/UI/ui.tscn" id="7_nixih"]
+[ext_resource type="AudioStream" uid="uid://b6ee7iyj6udx5" path="res://Assets/Sound/Wind.mp3" id="8_og64o"]
+[ext_resource type="AudioStream" uid="uid://h7gi3vhqnivy" path="res://Assets/Sound/Rain.mp3" id="9_ra144"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1e4d6"]
+shading_mode = 0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ev1eb"]
+emission_shape = 3
+emission_box_extents = Vector3(20, 1, 20)
+direction = Vector3(0, -1, 0)
+spread = 5.0
+gravity = Vector3(0, -1, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_lgbvw"]
+size = Vector2(0.1, 0.1)
+
+[sub_resource type="Gradient" id="Gradient_o8ul2"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xrnm0"]
+gradient = SubResource("Gradient_o8ul2")
+width = 8
+height = 32
+fill_from = Vector2(1, 1)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kopnj"]
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("GradientTexture2D_xrnm0")
+texture_filter = 0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fwkd3"]
+emission_shape = 3
+emission_box_extents = Vector3(10, 1, 10)
+direction = Vector3(0, -1, 0)
+spread = 5.0
+gravity = Vector3(0, -1, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 20.0
+sub_emitter_mode = 3
+sub_emitter_amount_at_collision = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_q27ee"]
+size = Vector2(0.025, 0.1)
+
+[node name="Game" type="Node"]
+script = ExtResource("1_nia64")
+
+[node name="Location" type="Node3D" parent="."]
+
+[node name="Woods" type="Node3D" parent="Location"]
+
+[node name="BigTree" parent="Location/Woods" instance=ExtResource("2_7axpa")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -3, 0, 4)
+
+[node name="BigTree5" parent="Location/Woods" instance=ExtResource("2_7axpa")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -3, 0, 2)
+
+[node name="BigTree6" parent="Location/Woods" instance=ExtResource("2_7axpa")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -3, 0, -1)
+
+[node name="BigTree2" parent="Location/Woods" instance=ExtResource("2_7axpa")]
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, 3, 0, 4)
+
+[node name="BigTree3" parent="Location/Woods" instance=ExtResource("2_7axpa")]
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, 3, 0, 2)
+
+[node name="BigTree4" parent="Location/Woods" instance=ExtResource("2_7axpa")]
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, 3, 0, -1)
+
+[node name="Environment" parent="Location" instance=ExtResource("5_gom0g")]
+
+[node name="Camera" type="Camera3D" parent="Location"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 4, 0)
+current = true
+script = ExtResource("3_f1qku")
+
+[node name="Player" parent="Location" instance=ExtResource("2_0dhdr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.435269, 3)
+
+[node name="Effects" type="Node3D" parent="Location"]
+
+[node name="Snow" type="GPUParticles3D" parent="Location/Effects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+material_override = SubResource("StandardMaterial3D_1e4d6")
+amount = 20
+lifetime = 0.5
+randomness = 1.0
+fixed_fps = 60
+visibility_aabb = AABB(-6, -6, -6, 12, 12, 12)
+draw_order = 3
+transform_align = 3
+process_material = SubResource("ParticleProcessMaterial_ev1eb")
+draw_pass_1 = SubResource("QuadMesh_lgbvw")
+
+[node name="Rain" type="GPUParticles3D" parent="Location/Effects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+visible = false
+material_override = SubResource("StandardMaterial3D_kopnj")
+amount = 256
+lifetime = 0.5
+randomness = 1.0
+fixed_fps = 60
+visibility_aabb = AABB(-5, -6, -5.1, 10, 12, 10.2)
+draw_order = 3
+transform_align = 2
+process_material = SubResource("ParticleProcessMaterial_fwkd3")
+draw_pass_1 = SubResource("QuadMesh_q27ee")
+
+[node name="SpawnPoint" type="Node3D" parent="Location"]
+
+[node name="Marker3D" type="Marker3D" parent="Location/SpawnPoint"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, 0)
+gizmo_extents = 1.0
+script = ExtResource("6_squsn")
+
+[node name="Marker3D2" type="Marker3D" parent="Location/SpawnPoint"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, -3)
+gizmo_extents = 1.0
+script = ExtResource("6_squsn")
+
+[node name="Marker3D3" type="Marker3D" parent="Location/SpawnPoint"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.5, 0.487032)
+gizmo_extents = 1.0
+script = ExtResource("6_squsn")
+
+[node name="Marker3D4" type="Marker3D" parent="Location/SpawnPoint"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.5, -3.42079)
+gizmo_extents = 1.0
+script = ExtResource("6_squsn")
+
+[node name="Sp" type="Node3D" parent="Location/SpawnPoint"]
+
+[node name="Canvas" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="Canvas" instance=ExtResource("7_nixih")]
+
+[node name="Sound" type="Node" parent="."]
+
+[node name="Wind" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("8_og64o")
+autoplay = true
+
+[node name="Rain" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("9_ra144")
+autoplay = true

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0b0a2pg6o45w"]
+
+[ext_resource type="PackedScene" uid="uid://c2re3byo6mu3h" path="res://Object/UI/main_menu.tscn" id="1_3s03u"]
+[ext_resource type="AudioStream" uid="uid://bdibrxy1i1lg7" path="res://Assets/Sound/Music/predetermined_death.ogg" id="2_yn4y8"]
+
+[node name="Base" type="Node"]
+
+[node name="Main Menu" parent="." instance=ExtResource("1_3s03u")]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_yn4y8")
+volume_db = 2.0
+autoplay = true

@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://b5xfmdr0xnmkc"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy/Laser.gd" id="1_emoay"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_onagx"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qu8ie"]
+size = Vector3(0.2, 0.2, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_50u26"]
+size = Vector3(2, 2, 7)
+
+[node name="Laser" type="Area3D"]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_emoay")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.5)
+material_override = SubResource("StandardMaterial3D_onagx")
+mesh = SubResource("BoxMesh_qu8ie")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.5)
+shape = SubResource("BoxShape3D_50u26")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

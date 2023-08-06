@@ -1,0 +1,169 @@
+[gd_scene load_steps=7 format=3 uid="uid://c2re3byo6mu3h"]
+
+[ext_resource type="Texture2D" uid="uid://hf2opgiyyh3c" path="res://Assets/Sprites/UI/music.png" id="1_qlx75"]
+[ext_resource type="Texture2D" uid="uid://c8lj486wys5hp" path="res://Assets/Sprites/UI/musicoff.png" id="2_fp3dt"]
+
+[sub_resource type="GDScript" id="GDScript_iaara"]
+script/source = "extends Control
+
+var world = preload(\"res://Scene/World.tscn\").instantiate()
+	
+func _ready() -> void:
+	var result = Save._load()
+	$GameTitle/BestResult.text = \"Best result: \" + result
+
+
+func _on_texture_button_pressed() -> void:
+	$\"../Music\".playing = !$\"../Music\".playing
+
+
+func _on_start_pressed() -> void:
+	get_parent().add_child(world)
+	queue_free()
+
+
+func _on_exit_pressed() -> void:
+	get_tree().quit()
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8o5cl"]
+bg_color = Color(0.0980392, 0.0980392, 0.0980392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bwa48"]
+bg_color = Color(0.0392157, 0.0392157, 0.0392157, 1)
+
+[sub_resource type="Theme" id="Theme_4jk5l"]
+Button/styles/normal = SubResource("StyleBoxFlat_8o5cl")
+Button/styles/pressed = SubResource("StyleBoxFlat_bwa48")
+
+[node name="Main Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_iaara")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+
+[node name="Start" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -366.0
+offset_top = -825.0
+offset_right = -73.0
+offset_bottom = -734.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = SubResource("Theme_4jk5l")
+theme_override_font_sizes/font_size = 60
+text = "Start"
+
+[node name="Exit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -366.0
+offset_top = -713.0
+offset_right = -73.0
+offset_bottom = -622.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = SubResource("Theme_4jk5l")
+theme_override_font_sizes/font_size = 60
+text = "Exit"
+
+[node name="Autor" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -205.0
+offset_top = -55.0
+offset_right = -32.0
+offset_bottom = -24.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Developer: Mina aka Polar4ik (PRL4K🌸#6727)
+Compositer: Saigo no-nozomi (Saigo no-nozomi#1206)"
+
+[node name="GameTitle" type="Label" parent="."]
+layout_mode = 1
+offset_left = 72.0
+offset_top = 56.0
+offset_right = 245.0
+offset_bottom = 87.0
+theme_override_font_sizes/font_size = 100
+text = "Henki"
+
+[node name="Version" type="Label" parent="GameTitle"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -86.5
+offset_top = -15.0
+offset_right = 86.5
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Version: 0.1"
+
+[node name="BestResult" type="Label" parent="GameTitle"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -74.0
+offset_top = 70.0
+offset_right = 74.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 30
+text = "Best result: 0"
+
+[node name="TextureButton" type="TextureButton" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -88.0
+offset_top = -168.0
+offset_right = -48.0
+offset_bottom = -128.0
+grow_horizontal = 0
+grow_vertical = 0
+toggle_mode = true
+texture_normal = ExtResource("1_qlx75")
+texture_pressed = ExtResource("2_fp3dt")
+
+[connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
